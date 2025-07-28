@@ -1,9 +1,28 @@
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import ProfileDashboard from '../components/ProfileDashboard';
 
 const Profile = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (!auth) return;
+    const unsub = onAuthStateChanged(
+      auth,
+      (u) => {
+        setUser(u);
+        setLoading(false);
+      },
+      (e) => {
+        setError(e as Error);
+        setLoading(false);
+      }
+    );
+    return unsub;
+  }, []);
 
   if (loading) {
     return <p>Loading...</p>;

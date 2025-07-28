@@ -3,13 +3,16 @@ import { useState } from 'react';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { app } from '../../lib/firebase';
 
-const storage = getStorage(app);
+let storage;
+if (app) {
+  storage = getStorage(app);
+}
 
 export default function AdminDashboard() {
   const [file, setFile] = useState<File | null>(null);
 
   const handleUpload = async () => {
-    if (!file) return;
+    if (!file || !storage) return;
     const fileRef = ref(storage, `uploads/${file.name}`);
     await uploadBytes(fileRef, file);
     alert('Uploaded');

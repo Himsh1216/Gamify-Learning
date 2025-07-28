@@ -1,3 +1,11 @@
+## Overview
+
+Cross-platform gamified learning app inspired by Duolingo. Core modules include:
+* User authentication and profiles with progress tracking.
+* Admin dashboard to upload learning materials that trigger Vertex AI to create lessons and quizzes.
+* Gamified course map, quizzes, streaks and XP with leaderboard.
+* Progressive Web App support and Firebase integration.
+
 ### Firestore Data Schema
 
 *   **users (collection)**:
@@ -158,3 +166,11 @@ export const processUploadedContent = functions.storage.object().onFinalize(asyn
 3.  **Deploy:** Navigate to your project directory and run `vercel`. Follow the prompts to configure and deploy your project.
 
 Remember to set up your Firebase environment variables (e.g., `NEXT_PUBLIC_FIREBASE_API_KEY`) in your hosting provider's settings.
+
+### Current Plan
+
+* Scaffold reusable React components for course map, quiz, leaderboard and profile dashboard.
+* Provide example Cloud Function using Vertex AI for automatic lesson generation.
+* Add Firebase security rules enforcing admin-only writes to course content.
+* Stub admin upload page that uploads files to Cloud Storage which triggers the function.
+* Add placeholder pages demonstrating leaderboard and lesson quizzes.

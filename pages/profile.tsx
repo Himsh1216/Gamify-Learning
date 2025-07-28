@@ -1,5 +1,6 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../lib/firebase';
+import ProfileDashboard from '../components/ProfileDashboard';
 
 const Profile = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -19,8 +20,7 @@ const Profile = () => {
   return (
     <div>
       <h1>Profile</h1>
-      <p>Email: {user.email}</p>
-      {/* Add profile details and options here */}
+      <ProfileDashboard email={user.email!} xp={0} streak={0} />
     </div>
   );
 };

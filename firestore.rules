@@ -3,8 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // Match any document in the database
     match /{document=**} {
-      allow read, write: if
-          request.auth != null; // Allow read/write if the user is authenticated
+      allow read: if request.auth != null;
     }
 
     // Specific rules for the 'users' collection
@@ -18,21 +17,15 @@ service cloud.firestore {
     // Specific rules for the 'courses' collection and its subcollections
     match /courses/{courseId} {
       allow read: if request.auth != null;
-      allow create: if false; // Courses should be created by admins
-      allow update: if false; // Courses should be updated by admins
-      allow delete: if false; // Courses should be deleted by admins
+      allow create, update, delete: if request.auth.token.admin == true;
 
       match /modules/{moduleId} {
         allow read: if request.auth != null;
-        allow create: if false; // Modules should be created by admins
-        allow update: if false; // Modules should be updated by admins
-        allow delete: if false; // Modules should be deleted by admins
+        allow create, update, delete: if request.auth.token.admin == true;
 
         match /lessons/{lessonId} {
           allow read: if request.auth != null;
-          allow create: if false; // Lessons should be created by admins
-          allow update: if false; // Lessons should be updated by admins
-          allow delete: if false; // Lessons should be deleted by admins
+          allow create, update, delete: if request.auth.token.admin == true;
         }
       }
     }

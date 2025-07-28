@@ -7,6 +7,7 @@ import * as functions from "firebase-functions";
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 // Import Vertex AI SDK here
+// import { VertexAI } from '@google-cloud/vertexai';
 
 initializeApp();
 const db = getFirestore();
@@ -26,10 +27,11 @@ export const processUploadedContent = functions.storage.object().onFinalize(asyn
     return null;
   }
 
-  // TODO: Download the file and extract text (for PDF/text files).
-  // TODO: Call Vertex AI (Gemini) to process the text and generate lessons/questions.
-  // TODO: Store the generated lessons and questions in Firestore.
-  // TODO: Optionally delete the original file or move it to a processed folder.
+  // Example: Download file, send to Vertex AI to create lessons and questions
+  // const ai = new VertexAI({project: process.env.GCP_PROJECT});
+  // const text = await extractTextFromFile(fileBucket, filePath);
+  // const response = await ai.generateContent({text});
+  // await db.collection('courses').doc(courseId).set(response);
 
   console.log(`Processing file: ${filePath}`);
 
